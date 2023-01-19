@@ -1,0 +1,67 @@
+mount containers running:
+IMAGE_TAG=local REGISTRY=local docker-compose up --build
+in the console
+
+
+
+insert example:
+curl --request POST \
+  --url http://localhost:8085/api/v1/computer \
+  --header 'Authorization: auth test' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"mac": "123jaldjwjd--0",
+	"computer_name": "lore_ipsum",
+	"ip": "192.168.1.70",
+	"employee": "GFR",
+	"description": "Rise and shine doctor..."
+	
+}'
+
+get all computers:
+curl --request GET \
+  --url http://localhost:8085/api/v1/GetAllComputers \
+  --header 'Authorization: auth test'
+
+update computer by MAC:
+curl --request PUT \
+  --url http://localhost:8085/api/v1/computer \
+  --header 'Authorization: auth test' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"mac": "123jaldjwjd--0",
+	"computer_name": "si vis pacem, parabelum",
+	"ip": "192.168.1.70",
+	"employee": "GFR",
+	"description": "Rise and shine doctor..."
+	
+}'
+
+delete computer
+curl --request DELETE \
+  --url http://localhost:8085/api/v1/computer \
+  --header 'Authorization: auth test' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"mac": "123jaldjwjd--0"
+}'
+
+assign computer
+curl --request POST \
+  --url http://localhost:8085/api/v1/computer/assign \
+  --header 'Authorization: auth test' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"mac": "123jaldjwjd--2",
+	"employee": "AVA"
+}'
+
+unassign computer
+curl --request POST \
+  --url http://localhost:8085/api/v1/computer/unsassign \
+  --header 'Authorization: auth test' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"mac": "123jaldjwjd--2",
+	"employee": "GFR"
+}'

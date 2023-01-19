@@ -1,0 +1,52 @@
+version: '3.4'
+services:
+  api:
+    build: ./api
+    image: ${REGISTRY}/api:${IMAGE_TAG}
+    ports:
+    - 8085:8080
+    networks: 
+      - public
+      - internal
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+      update_config:
+        parallelism: 1
+        delay: 5s
+        monitor: 5s
+        order: start-first
+        failure_action: rollback
+  
+  admin-notif:
+    build: ./admin-notif
+    image: ${REGISTRY}/admin-notif:${IMAGE_TAG}
+    ports:
+    - 8082:8080
+    networks: 
+      - public
+      - internal
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+      update_config:
+        parallelism: 1
+        delay: 5s
+        monitor: 5s
+        order: start-first
+        failure_action: rollback
+    depends_on:
+      - api
+
+
+networks:
+  public:
+    external:
+      name: public
+  internal:
